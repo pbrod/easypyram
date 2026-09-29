@@ -86,7 +86,7 @@ jobs:
         run: pdm run check-types
 
       - name: Run tests
-        run: pdm run tests
+        run: pdm run test
 
   build:
     name: Build distribution
