@@ -60,14 +60,12 @@ authors = [
     { name = "Per A. Brodtkorb", email = "per.andreas.brodtkorb@gmail.com" },
 ]
 maintainers = [
-{ name = "Per A. Brodtkorb", email = "per.andreas.brodtkorb@gmail.com" },
+    { name = "Per A. Brodtkorb", email = "per.andreas.brodtkorb@gmail.com" },
 ]
 
 readme = "README.md"
 license = "BSD-3-Clause"
 license-files = ["LICENSE.md"]
-
-
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -94,11 +92,6 @@ keywords = [
     "PyRAM",
 ]
 
-[project.urls]
-Homepage = "https://github.com/pbrod/easypyram"
-Repository = "https://github.com/pbrod/easypyram"
-Issues = "https://github.com/pbrod/easypyram/issues"
-Changelog = "https://github.com/pbrod/easypyram/blob/master/CHANGELOG.md"
 
 requires-python = ">=3.10"
 
@@ -106,6 +99,12 @@ dependencies = [
     "numpy>=1.25",
     "numba>=0.58",
 ]
+
+[project.urls]
+Homepage = "https://github.com/pbrod/easypyram"
+Repository = "https://github.com/pbrod/easypyram"
+Issues = "https://github.com/pbrod/easypyram/issues"
+Changelog = "https://github.com/pbrod/easypyram/blob/master/CHANGELOG.md"
 
 [project.optional-dependencies]
 plot = ["matplotlib>=3.8.0"]
@@ -121,6 +120,7 @@ release = [
     "git-cliff>=2.6.1",
     "pdm-bump>=0.9.8",
 ]
+
 
 [tool.mypy]
 strict = true
