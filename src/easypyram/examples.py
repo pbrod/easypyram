@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pyram.PyRAM import PyRAM, arctic_profile, munk_profile
+from easypyram.PyRAM import PyRAM, arctic_profile, munk_profile
 
 
 def example1() -> None:
