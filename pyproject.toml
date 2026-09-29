@@ -55,18 +55,24 @@
 [project]
 name = "easypyram"
 dynamic = ["version"]
-description = "User-friendly Python implementation of the Range-dependent Acoustic Model (RAM)"
+description = "User-friendly Python implementation of the Range-dependent Acoustic Model (RAM) for underwater acoustics"
 authors = [
     { name = "Per A. Brodtkorb", email = "per.andreas.brodtkorb@gmail.com" },
 ]
-license = { file = "LICENSE.md" }
+maintainers = [
+{ name = "Per A. Brodtkorb", email = "per.andreas.brodtkorb@gmail.com" },
+]
+
 readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE.md"]
+
+
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -74,17 +80,25 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
 ]
 
 keywords = [
     "acoustics",
     "underwater acoustics",
-    "parabolic equation",
     "ocean acoustics",
+    "acoustic propagation",
+    "sound propagation",
+    "parabolic equation",
     "RAM",
     "PyRAM",
-    "sound propagation",
 ]
+
+[project.urls]
+Homepage = "https://github.com/pbrod/easypyram"
+Repository = "https://github.com/pbrod/easypyram"
+Issues = "https://github.com/pbrod/easypyram/issues"
+Changelog = "https://github.com/pbrod/easypyram/blob/master/CHANGELOG.md"
 
 requires-python = ">=3.10"
 
@@ -181,9 +195,8 @@ format = "ruff format ./src/"  # format code
 check-format = "ruff format --check ./src/"  # check code formatting
 check-style = "ruff check ./src/"  # check code style
 check-types = "mypy ./src/"  # check types
-tests = { cmd = "pytest", env = { MPLBACKEND = "Agg" } }
-test = { composite = ["tests"] }
-all-tests = { composite = ["format", "check-style", "check-types", "tests"] }
+test = { cmd = "pytest", env = { MPLBACKEND = "Agg" } }
+all-tests = { composite = ["check-format", "check-style", "check-types", "test"] }
 
 show-next-version = "git-cliff --bumped-version"  # calculate and print the next semantic version
 show-next-changelog = "git-cliff"
