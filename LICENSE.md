@@ -1,6 +1,6 @@
-Copyright © 2000 Dr. Michael D. Collins  
-Copyright © 2017 Marcus Donnelly  
-Copyright © 2026 Per A. Brodtkorb
+Copyright Â© 2000 Dr. Michael D. Collins  
+Copyright Â© 2017 Marcus Donnelly  
+Copyright Â© 2026 Per A. Brodtkorb
 
 All rights reserved.
 
