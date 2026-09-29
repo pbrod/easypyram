@@ -7,8 +7,8 @@ from time import time
 
 import numpy as np
 
-from pyram.PyRAM import PyRAM, PyRAMResults
-from pyram.PyRAMmp import FloatArray, PyRAMArgs, PyRAMKwargs, PyRAMmp, PyRAMRun
+from easypyram.PyRAM import PyRAM, PyRAMResults
+from easypyram.PyRAMmp import FloatArray, PyRAMArgs, PyRAMKwargs, PyRAMmp, PyRAMRun
 
 
 def test_pyrammp() -> None:

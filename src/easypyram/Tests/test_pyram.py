@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from pyram.PyRAM import PyRAM
+from easypyram.PyRAM import PyRAM
 
 
 def test_pyram() -> None:

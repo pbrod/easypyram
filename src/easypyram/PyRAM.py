@@ -32,9 +32,9 @@ from typing import Any, NamedTuple
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from pyram.matrc import matrc
-from pyram.outpt import outpt
-from pyram.solve import solve
+from easypyram.matrc import matrc
+from easypyram.outpt import outpt
+from easypyram.solve import solve
 
 __all__ = (
     "arctic_profile",

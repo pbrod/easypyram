@@ -18,7 +18,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/project/pyram/
+      url: https://pypi.org/project/easypyram/
 
     steps:
       - name: Checkout repository
@@ -80,7 +80,7 @@ jobs:
         run: |
           python -m venv test_env
           test_env/bin/pip install dist/*.whl
-          test_env/bin/python -c "import pyram"
+          test_env/bin/python -c "import easypyram"
 
       - name: Publish to PyPI
         if: steps.check_version.outputs.version_exists == 'false'

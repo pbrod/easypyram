@@ -9,7 +9,7 @@ from typing import Any, TypedDict
 import numpy as np
 from numpy.typing import NDArray
 
-from pyram.PyRAM import PyRAM, PyRAMResults
+from easypyram.PyRAM import PyRAM, PyRAMResults
 
 FloatArray = NDArray[np.float64]
 

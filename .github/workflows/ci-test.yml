@@ -120,8 +120,8 @@ jobs:
           test_env/bin/python -m pip install --upgrade pip
           test_env/bin/pip install dist/*.whl
 
-          test_env/bin/python -c "import pyram"
-          test_env/bin/python -c "from pyram import PyRAM, PyRAMResults"
+          test_env/bin/python -c "import easypyram"
+          test_env/bin/python -c "from easypyram import PyRAM, PyRAMResults"
 
       - name: Upload distributions
         uses: actions/upload-artifact@v4
