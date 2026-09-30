@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.1] - 2026-09-30
+
+### 📚 Documentation
+
+- *(readme)* Fix repository, changelog, migration, and license links when rendered on PyPI
+
 ## [2.1.0] - 2026-09-30
 
 ### 🚀 Features

@@ -282,7 +282,7 @@ and demonstrate:
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for release notes and migration information,
+See [CHANGELOG.md](https://github.com/pbrod/easypyram/blob/master/CHANGELOG.md) for release notes and migration information,
 including the changes required when migrating from PyRAM v1.x.
 
 ## Relationship to RAM and PyRAM
