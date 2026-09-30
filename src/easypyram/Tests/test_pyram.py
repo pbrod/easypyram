@@ -6,7 +6,6 @@ import numpy as np
 import pytest
 
 from easypyram.PyRAM import PyRAM
-
 from easypyram.PyRAMmp import PyRAMArgs
 
 
