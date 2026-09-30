@@ -1,11 +1,19 @@
 # EasyPyRAM
 
+![CI Tests](https://github.com/pbrod/easypyram/actions/workflows/ci-test.yml/badge.svg)
+[![PyPI](https://img.shields.io/pypi/v/easypyram.svg)](https://pypi.org/project/easypyram/)
+![Python Versions](https://img.shields.io/pypi/pyversions/easypyram.svg)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE.md)
+[![Ruff](https://img.shields.io/badge/lint-ruff-blueviolet)](https://github.com/astral-sh/ruff)
+[![Mypy](https://img.shields.io/badge/type--checked-mypy-blue)](http://mypy-lang.org/)
+[![Downloads](https://pepy.tech/badge/easypyram/month)](https://pepy.tech/project/easypyram)
+
 **EasyPyRAM** is a user-friendly Python implementation of the
 Range-dependent Acoustic Model (RAM) for underwater acoustic propagation.
 
-The project builds on PyRAM while placing additional emphasis on ease of use,
-sensible defaults, structured results, documentation, examples, testing, and
-modern Python development practices.
+The project builds on [PyRAM](https://github.com/marcuskd/pyram) while placing
+additional emphasis on ease of use, sensible defaults, structured results,
+documentation, examples, testing, and modern Python development practices.
 
 EasyPyRAM aims to lower the barrier to using RAM without hiding the numerical
 parameters that experienced users may need to control.
@@ -13,7 +21,7 @@ parameters that experienced users may need to control.
 ## Background
 
 RAM was created by Michael D. Collins at the U.S. Naval Research Laboratory.
-The Python implementation is based on RAM v1.5, available from the
+PyRAM, and therefore EasyPyRAM, is based on RAM v1.5, available from the
 Ocean Acoustics Library:
 
 https://oalib-acoustics.org/models-and-software/parabolic-equation
@@ -88,6 +96,15 @@ To install the latest development version directly from GitHub:
 python -m pip install "git+https://github.com/pbrod/easypyram.git"
 ```
 
+### Migrating from PyRAM
+
+EasyPyRAM 2.0.0 introduces several API changes compared with PyRAM 1.x,
+including the new `easypyram` package namespace and the `PyRAMResults`
+result interface.
+
+See the [v2.0.0 migration guide](CHANGELOG.md#-migration-from-pyram-v1x)
+for details.
+
 ## Quick Start
 
 The following example calculates transmission loss for a simple
@@ -98,7 +115,7 @@ import numpy as np
 
 from easypyram import PyRAM
 
-pyram = PyRAM(
+model = PyRAM(
     freq=50.0,
     zs=50.0,
     zr=50.0,
@@ -125,8 +142,14 @@ pyram = PyRAM(
     rmax=50_000.0,
 )
 
-result = pyram.run()
+result = model.run()
 ```
+
+In this example, `dr` and `dz` are not specified. EasyPyRAM automatically
+selects wavelength-based range and depth steps that provide practical
+starting values. Experienced users can specify these parameters
+explicitly when performing convergence studies or when a particular
+output resolution is required.
 
 EasyPyRAM returns a structured `PyRAMResults` object. Model outputs are
 therefore directly available as attributes:
@@ -181,8 +204,11 @@ sound_speed = munk_profile(depth)
 An idealized Arctic profile is also provided:
 
 ```python
+import numpy as np
+
 from easypyram import arctic_profile
 
+depth = np.arange(0.0, 2000.0, 10.0)
 sound_speed = arctic_profile(depth)
 ```
 
@@ -206,14 +232,30 @@ plt.legend()
 plt.show()
 ```
 
+## Examples
+
+Additional examples are available in 
+[`easypyram.examples`](src/easypyram/examples.py)
+and demonstrate:
+
+- long-range acoustic propagation;
+- transmission-loss contour plots;
+- comparison with the Lloyd-mirror solution;
+- Munk and idealized Arctic sound-speed profiles.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release notes and migration information,
+including the changes required when migrating from PyRAM v1.x.
+
 ## Relationship to RAM and PyRAM
 
 RAM was developed by Michael D. Collins at the U.S. Naval Research Laboratory.
 
-PyRAM was developed by Marcus Donnelly as a Python adaptation of RAM. 
+PyRAM was developed by Marcus Donnelly as a Python adaptation of RAM.
 
 EasyPyRAM is derived from PyRAM and is independently maintained, with an
 emphasis on ease of use, sensible defaults, structured results, documentation,
 examples, and modern Python development practices.
- 
+
 EasyPyRAM is not an official version of RAM or PyRAM.
