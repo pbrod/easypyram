@@ -12,7 +12,7 @@
 # Prepare release:
 #   pdm install -G release   # Install release tools if needed
 #   pdm prepare-release      # Update CHANGELOG.md. Inspect and verify.
-#   git log v1.3.0..HEAD --oneline > log.txt
+#   git log v2.0.0..HEAD --oneline > log.txt
 #   git add .
 #   git commit -m "Prepare release"
 #   git push

@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.0] - 2026-09-30
+
+### 🚀 Features
+
+- *(PyRAM)* Add `grid="pyram"` preset for reproducing PyRAM v1.x automatic grid spacing
+- *(PyRAM)* Add `grid="default"` preset for EasyPyRAM wavelength-based grid spacing
+- *(PyRAM)* Allow explicit `dr` and `dz` values to override grid preset values
+
+### 🧪 Testing
+
+- *(PyRAM)* Add tests for grid presets, explicit overrides, validation, and Padé-term dependence
+
+### 📚 Documentation
+
+- *(readme)* Update README with EasyPyRAM 2.x usage and PyRAM migration guidance
+- *(PyRAM)* Document grid presets, numerical recommendations, and PyRAM compatibility behavior
+
 ## [2.0.0] - 2026-09-29
 
 ### 🚀 Features
