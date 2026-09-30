@@ -5,7 +5,7 @@
 ![Python Versions](https://img.shields.io/pypi/pyversions/easypyram.svg)
 [![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE.md)
 [![Ruff](https://img.shields.io/badge/lint-ruff-blueviolet)](https://github.com/astral-sh/ruff)
-[![Mypy](https://img.shields.io/badge/type--checked-mypy-blue)](http://mypy-lang.org/)
+[![Mypy](https://img.shields.io/badge/type--checked-mypy-blue)](https://mypy-lang.org/)
 [![Downloads](https://pepy.tech/badge/easypyram/month)](https://pepy.tech/project/easypyram)
 
 **EasyPyRAM** is a user-friendly Python implementation of the
@@ -98,14 +98,14 @@ python -m pip install "git+https://github.com/pbrod/easypyram.git"
 
 ### Migrating from PyRAM
 
-EasyPyRAM 2.0.0 introduces several API changes compared with PyRAM 1.x,
-including the new `easypyram` package namespace and the `PyRAMResults`
-result interface.
+EasyPyRAM 2.x introduces several API changes compared with PyRAM 1.x,
+beginning with EasyPyRAM 2.0.0.
 
 See the [v2.0.0 migration guide](CHANGELOG.md#-migration-from-pyram-v1x)
 for details.
 
 #### Grid-spacing defaults
+
 EasyPyRAM uses different automatic grid-spacing defaults from PyRAM v1.x.
 
 The available presets are:
@@ -117,22 +117,22 @@ If `grid` is not specified, `grid="default"` is used.
 
 EasyPyRAM default:
 
-```text 
+```text
 dr = 0.5 * wavelength
 dz = 0.05 * wavelength
 ```
 
+The original PyRAM preset uses a fixed reference sound speed of 1500 m/s,
+and its automatic range step also depends on the number of Padé terms (`np`):
 
-Original PyRAM:
-
-```text 
+```text
 dr = np * 1500 / freq
 dz = 0.1 * 1500 / freq
 ```
 
 To reproduce the original PyRAM automatic grid selection:
 
-```python 
+```python
 model = PyRAM(
     ...,
     grid="pyram",
@@ -183,7 +183,7 @@ result = model.run()
 ```
 
 In this example, `dr` and `dz` are not specified, so EasyPyRAM uses the
-default grid preset (grid="default"). This selects wavelength-based
+default grid preset (`grid="default"`). This selects wavelength-based
 range and depth steps that provide practical starting values. Experienced
 users can specify `dr` and `dz` explicitly when performing convergence
 studies or when a particular output resolution is required.
