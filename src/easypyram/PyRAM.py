@@ -201,7 +201,7 @@ def munk_profile(
 
 class PyRAM:
     """
-    Range-dependent Acoustic Model (RAM)
+    Python implementation of the Range-dependent Acoustic Model (RAM).
 
     Parameters
     ----------
@@ -242,12 +242,42 @@ class PyRAM:
     c0 : float, optional
         Reference sound speed [m/s]. Defaults to the mean of the
         first water sound-speed profile.
+    grid : {"default", "pyram"}, optional
+        Grid-spacing preset used to determine ``dr`` and ``dz`` when these
+        parameters are not specified explicitly.
+
+        ``"default"``
+            Use the EasyPyRAM defaults:
+
+            ``dr = 0.5 * wavelength``
+
+            ``dz = 0.05 * wavelength``
+
+            where ``wavelength = c0 / freq`` and ``c0`` is the reference
+            sound speed. These values satisfy the grid-spacing recommendations
+            given in the Notes below and provide practical starting points for
+            typical calculations.
+
+        ``"pyram"``
+            Use the original PyRAM automatic grid-spacing defaults:
+
+            ``dr = np * 1500 / freq``
+
+            ``dz = 0.1 * 1500 / freq``
+
+            where ``np`` is the number of Padé approximation terms and
+            1500 m/s is the fixed reference sound speed used by the
+            original PyRAM default.
+
+            This preset is provided for compatibility with PyRAM and can be
+            useful when reproducing calculations performed with PyRAM v1.x.
+
+        Defaults to ``"default"``. Explicit ``dr`` and ``dz`` values override
+        the corresponding values selected by the preset.
     dr : float, optional
-        Calculation range step [m]. Defaults to ``0.5`` times the
-        acoustic wavelength.
+        Calculation range step [m]. If not specified, determined by ``grid``.
     dz : float, optional
-        Calculation depth step [m]. Defaults to
-        ``0.05`` times the acoustic wavelength.
+        Calculation depth step [m]. If not specified, determined by ``grid``.
     ndr : int, optional
         Number of range steps between outputs. Defaults to
         ``_ndr_default`` (1).
@@ -280,42 +310,37 @@ class PyRAM:
     consisting of fluid layers and neglecting seabed shear waves.
 
     The numerical accuracy is primarily controlled by ``np``, ``dr``, and ``dz``.
-    Increasing the number of Padé terms generally improves accuracy at
-    the expense of increased computational cost. The number of stability
-    constraints (``ns``) can be increased if the solution exhibits
-    numerical instability for any combination of ``np``, ``dr`` and ``dz``.
+    Increasing the number of Padé terms generally improves accuracy at the expense
+    of increased computational cost. The number of stability constraints (``ns``)
+    can be increased if the solution exhibits numerical instability for a given
+    combination of ``np``, ``dr``, and ``dz``.
 
-    General rules for using RAM:
+    As a rule of thumb, use:
 
-    As a rule of thumb use:
+        ``dr`` <= 0.66 * wavelength       (1)
+        ``dz`` <= 0.066 * wavelength      (2)
 
-       ``dr`` <= 0.66 * wavelength           (1)
-       ``dz`` <= 0.066 * wavelength          (2)
+    The EasyPyRAM ``"default"`` grid preset satisfies these recommendations.
+    The ``"pyram"`` preset reproduces the original PyRAM automatic grid-spacing
+    rules and does not generally satisfy Eqs. (1) and (2).
 
-    The default values of ``dr`` and ``dz`` satisfy these recommendations.
-    The allowable range-step size is limited by the degree of range
-    dependence in the environment. The RAM PE solver permits arbitrarily
-    large range steps of many wavelengths for range-independent regions
-    and dense range sampling. For an environment with small range variations,
-    a solution computed using the range-step specifications defined by
-    Eq. (1) and sampled on a fine scale, is barely distinguishable from a
-    solution computed with large range steps (``dr = 50 * wavelength``),
-    although sampled more sparsely. Calculations with a range step size that
-    satisfies Eq. (1) are computationally inefficient for environments with
-    small variations, but will handle a greater range of environments without
-    the hassle of having to evaluate the rate of range dependency and can
-    provide a solution that is sampled on a fine scale.
+    The allowable range-step size also depends on the degree of range dependence
+    in the environment. RAM permits much larger range steps in weakly
+    range-dependent or range-independent environments. Consequently, calculations
+    using the recommended values in Eqs. (1) and (2) may be computationally
+    inefficient for slowly varying environments, but provide a useful starting
+    point without requiring the user to estimate the degree of range dependence.
 
-    Occasionally you will see output that looks like the computation stopped
-    halfway or the data will be blank. This likely means there was an
-    instability in the calculation. The usual remedy is to vary ``dr`` until
-    a stable solution is obtained. If varying ``dr`` does not eliminate
-    the instability, try increasing ``ns`` above 1.
+    The ``grid`` parameter only controls ``dr`` and ``dz`` when they have not been
+    specified explicitly. For example,
 
-    It is good to refine your grid (make ``dr`` and ``dz`` smaller) and increase
-    the number of Padé terms to ensure that the solution has converged.
-    Experience will guide you in deciding numerical parameters given a frequency
-    and geoacoustic environment.
+        grid="pyram", dr=20.0
+
+    uses ``dr = 20.0`` while selecting ``dz`` according to the original PyRAM
+    default.
+
+    Regardless of the selected preset, convergence should be checked by refining
+    ``dr`` and ``dz`` when numerical accuracy is important.
 
     The RAM model approximates a semi-infinite bottom half-space by
     appending an artificial high-attenuation layer, also called a sponge layer,
@@ -539,10 +564,24 @@ class PyRAM:
         lambda0: float = self._c0 / self._freq
         self._lambda = lambda0
 
-        # dr and dz are based on c0 to get sensible output steps
-        self._dr: float = float(kwargs.get("dr", 0.5 * lambda0))
-        self._dz: float = float(kwargs.get("dz", 0.05 * lambda0))
+        grid = kwargs.get("grid", "default")
+        if not isinstance(grid, str):
+            raise TypeError("grid must be a string")
 
+        self._grid = grid.lower()
+        if self._grid == "pyram":
+            pyram_lambda = 1500.0 / self._freq
+            default_dr = self._np * pyram_lambda
+            default_dz = 0.1 * pyram_lambda
+        elif self._grid == "default":
+            # dr and dz are based on c0 to get sensible output steps
+            default_dr = 0.5 * lambda0
+            default_dz = 0.05 * lambda0
+        else:
+            raise ValueError(f"grid must be 'default' or 'pyram', but got {grid!r}")
+
+        self._dr: float = float(kwargs.get("dr", default_dr))
+        self._dz: float = float(kwargs.get("dz", default_dz))
         self._ndr: int = int(kwargs.get("ndr", PyRAM._ndr_default))
         self._ndz: int = int(kwargs.get("ndz", PyRAM._ndz_default))
 

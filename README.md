@@ -31,9 +31,9 @@ used directly within a Python environment, such as IPython, Spyder, or Jupyter,
 and that is easier to understand, extend, and integrate into other applications
 than the original Fortran implementation.
 
-The implementation is written in Python and uses Numba JIT compilation for the
-computationally intensive numerical routines, providing performance comparable
-to compiled native code while retaining a Python interface.
+The numerical implementation is written in Python and uses Numba JIT
+compilation for computationally intensive routines, providing performance
+comparable to compiled native code while retaining a Python interface.
 
 The `PyRAM` class largely follows the structure of the original RAM Fortran
 implementation. Many methods correspond directly to the original Fortran
@@ -105,6 +105,43 @@ result interface.
 See the [v2.0.0 migration guide](CHANGELOG.md#-migration-from-pyram-v1x)
 for details.
 
+#### Grid-spacing defaults
+EasyPyRAM uses different automatic grid-spacing defaults from PyRAM v1.x.
+
+The available presets are:
+
+- `grid="default"` uses the EasyPyRAM wavelength-based defaults.
+- `grid="pyram"` reproduces the original PyRAM automatic grid selection.
+
+If `grid` is not specified, `grid="default"` is used.
+
+EasyPyRAM default:
+
+```text 
+dr = 0.5 * wavelength
+dz = 0.05 * wavelength
+```
+
+
+Original PyRAM:
+
+```text 
+dr = np * 1500 / freq
+dz = 0.1 * 1500 / freq
+```
+
+To reproduce the original PyRAM automatic grid selection:
+
+```python 
+model = PyRAM(
+    ...,
+    grid="pyram",
+)
+```
+
+Applications that already specify both `dr` and `dz` explicitly are
+unaffected by the change in grid preset.
+
 ## Quick Start
 
 The following example calculates transmission loss for a simple
@@ -145,11 +182,11 @@ model = PyRAM(
 result = model.run()
 ```
 
-In this example, `dr` and `dz` are not specified. EasyPyRAM automatically
-selects wavelength-based range and depth steps that provide practical
-starting values. Experienced users can specify these parameters
-explicitly when performing convergence studies or when a particular
-output resolution is required.
+In this example, `dr` and `dz` are not specified, so EasyPyRAM uses the
+default grid preset (grid="default"). This selects wavelength-based
+range and depth steps that provide practical starting values. Experienced
+users can specify `dr` and `dz` explicitly when performing convergence
+studies or when a particular output resolution is required.
 
 EasyPyRAM returns a structured `PyRAMResults` object. Model outputs are
 therefore directly available as attributes:
@@ -234,7 +271,7 @@ plt.show()
 
 ## Examples
 
-Additional examples are available in 
+Additional examples are available in
 [`easypyram.examples`](src/easypyram/examples.py)
 and demonstrate:
 
