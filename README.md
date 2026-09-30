@@ -3,7 +3,7 @@
 ![CI Tests](https://github.com/pbrod/easypyram/actions/workflows/ci-test.yml/badge.svg)
 [![PyPI](https://img.shields.io/pypi/v/easypyram.svg)](https://pypi.org/project/easypyram/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/easypyram.svg)
-[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE.md)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](https://github.com/pbrod/easypyram/blob/master/LICENSE.md)
 [![Ruff](https://img.shields.io/badge/lint-ruff-blueviolet)](https://github.com/astral-sh/ruff)
 [![Mypy](https://img.shields.io/badge/type--checked-mypy-blue)](https://mypy-lang.org/)
 [![Downloads](https://pepy.tech/badge/easypyram/month)](https://pepy.tech/project/easypyram)
@@ -101,7 +101,7 @@ python -m pip install "git+https://github.com/pbrod/easypyram.git"
 EasyPyRAM 2.x introduces several API changes compared with PyRAM 1.x,
 beginning with EasyPyRAM 2.0.0.
 
-See the [v2.0.0 migration guide](CHANGELOG.md#-migration-from-pyram-v1x)
+See the [v2.0.0 migration guide](https://github.com/pbrod/easypyram/blob/master/CHANGELOG.md#-migration-from-pyram-v1x)
 for details.
 
 #### Grid-spacing defaults
@@ -272,7 +272,7 @@ plt.show()
 ## Examples
 
 Additional examples are available in
-[`easypyram.examples`](src/easypyram/examples.py)
+[`easypyram.examples`](https://github.com/pbrod/easypyram/blob/master/src/easypyram/examples.py)
 and demonstrate:
 
 - long-range acoustic propagation;
