@@ -124,6 +124,7 @@ def test_invalid_grid(pyram_args: PyRAMArgs) -> None:
             **pyram_args,
         )
 
+
 def test_grid_requires_string(pyram_args: PyRAMArgs) -> None:
     """Verify grid preset names must be strings."""
     with pytest.raises(TypeError, match="grid must be a string"):
